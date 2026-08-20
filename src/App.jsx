@@ -6,16 +6,18 @@ function App() {
     const [messages, setMessages] = useState([])
     const [input, setInput] = useState("");
 
-    function getNewMessage() {
+    function getNewMessage(event) {
+        event.preventDefault()
+
         setMessages(messages => [...messages, {
-            speaker: "user",
+            isAI: false,
             text: input
         }]);
         getTestMessage(input).then(resp => {
             const answer = resp.answer;
 
             setMessages(messages => [...messages, {
-                speaker: "AI",
+                isAI: true,
                 text: answer
             }]);
 
@@ -35,14 +37,15 @@ function App() {
     return (
         <>
             {messages.map(message => (
-                <div key={message.id}>
-                    <p key={message.id}>{message.speaker} --- {message.text}</p>
-                    <hr/>
+                <div className={"speech-bubble " + (message.isAI ? "speech-bubble-ai" : "speech-bubble-user")} key={message.id}>
+                    <p key={message.id}>{message.isAI ? "AI" : "You"} --- {message.text}</p>
                 </div>
             ))}
 
-            <input type="text" onChange={event => handleInputChange(event)}/>
-            <button onClick={getNewMessage}>New Message</button>
+            <form onSubmit={event => getNewMessage(event)}>
+                <input type="text" onChange={event => handleInputChange(event)}/>
+                <button onClick={getNewMessage}>New Message</button>
+            </form>
         </>
     )
 }
