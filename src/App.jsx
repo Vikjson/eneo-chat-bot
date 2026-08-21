@@ -16,7 +16,7 @@ function App() {
             return;
         }
 
-        const userMessage =  createMessageObject("user", text)
+        const userMessage = createMessageObject("user", text)
         setMessages((messages) => [...messages, userMessage]);
         setInput("");
         setIsLoading(true);
@@ -43,7 +43,7 @@ function App() {
         }
     }
 
-    function createMessageObject(speaker, text){
+    function createMessageObject(speaker, text) {
         return {
             id: crypto.randomUUID(),
             speaker: speaker,
@@ -96,21 +96,22 @@ function App() {
                 </div>
 
                 <div className="input-area">
-                    <input
+                    <textarea
                         type="text"
                         value={input}
-                        placeholder="Skriv ett meddelande..."
+                        placeholder="Ställ en fråga..."
                         onChange={(event) => setInput(event.target.value)}
                         onKeyDown={handleKeyDown}
                         disabled={isLoading}
                     />
-
-                    <button
-                        onClick={sendMessage}
-                        disabled={!input.trim() || isLoading}
-                    >
-                        Skicka
-                    </button>
+                    <div className="input-actions">
+                        <button
+                            onClick={sendMessage}
+                            disabled={!input.trim() || isLoading}
+                        >
+                            Skicka
+                        </button>
+                    </div>
                 </div>
             </section>
         </main>
