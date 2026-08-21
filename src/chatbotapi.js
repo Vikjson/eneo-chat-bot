@@ -89,19 +89,25 @@ function createTimedMessageObject(speaker, text, time) {
 }
 
 function parseTime(time) {
-    const hours = time.getHours();
-    const minutes = time.getMinutes();
-    const day = time.getDate();
-    const month = time.getMonth() + 1;
+    const hours = formatTime(time.getHours());
+    const minutes = formatTime(time.getMinutes());
+    const day = formatTime(time.getDate());
+    const month = formatTime(time.getMonth() + 1);
     const year = time.getFullYear();
     return `${hours}:${minutes} | ${day}-${month}-${year}`
 }
 
 
 /**
- *
+ * Appends a leading 0 to time units that are only 1 character long.
+ * @param {number} time
  */
-function formatText(text){
+function formatTime(time){
 
+    if(time.toString().length === 1){
+        return `0${time}`;
+    } else{
+        return time.toString();
+    }
 
 }
