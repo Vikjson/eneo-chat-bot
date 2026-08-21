@@ -7,6 +7,7 @@ function App() {
         createMessageObject("ai", "Hej. Vad kan jag hjälpa dig med?")]
     );
 
+
     const [input, setInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
@@ -89,7 +90,7 @@ function App() {
                     {isLoading && (
                         <div className="message ai">
                             <div className="bubble typing">
-                                Thinking
+                                Tänker...
                             </div>
                         </div>
                     )}
