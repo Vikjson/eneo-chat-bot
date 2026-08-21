@@ -4,13 +4,8 @@ import {getTestMessage} from './chatbotapi.js'
 
 function App() {
     const [messages, setMessages] = useState([
-        {
-            id: crypto.randomUUID(),
-            speaker: "ai",
-            text: "Hej. Vad kan jag hjälpa dig med?",
-            time: parseTime(new Date())
-        },
-    ]);
+        createMessageObject("ai", "Hej. Vad kan jag hjälpa dig med?")]
+    );
 
     const [input, setInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -20,13 +15,8 @@ function App() {
         if (!text || isLoading) {
             return;
         }
-        const userMessage = {
-            id: crypto.randomUUID(),
-            speaker: "user",
-            text: text,
-            time: parseTime(new Date())
-        };
 
+        const userMessage =  createMessageObject("user", text)
         setMessages((messages) => [...messages, userMessage]);
         setInput("");
         setIsLoading(true);
@@ -34,23 +24,13 @@ function App() {
         try {
             const resp = await getTestMessage(text);
 
-            const aiMessage = {
-                id: crypto.randomUUID(),
-                speaker: "ai",
-                text: resp.answer,
-                time: parseTime(new Date())
-            };
+            const aiMessage = createMessageObject("ai", resp.answer)
 
             setMessages((messages) => [...messages, aiMessage]);
         } catch (error) {
             setMessages((messages) => [
                 ...messages,
-                {
-                    id: crypto.randomUUID(),
-                    speaker: "ai",
-                    text: "Svar kunde ej hämtas.",
-                    time: parseTime(new Date())
-                },
+                createMessageObject("ai", "Kunde inte hämta svar."),
             ]);
         } finally {
             setIsLoading(false);
@@ -63,8 +43,16 @@ function App() {
         }
     }
 
+    function createMessageObject(speaker, text){
+        return {
+            id: crypto.randomUUID(),
+            speaker: speaker,
+            text: text,
+            time: parseTime(new Date())
+        }
+    }
 
-    function parseTime(time){
+    function parseTime(time) {
         const hours = time.getHours();
         const minutes = time.getMinutes();
         const day = time.getDate();
@@ -89,11 +77,11 @@ function App() {
                             key={message.id}
                             className={`message ${message.speaker}`}
                         >
-                            <div className="message-content">
-                                <div className="bubble">
-                                    {message.text}
+                            <div className="bubble">
+                                {message.text}
+                                <div className="date-display">
+                                    {message.time}
                                 </div>
-                                <span>{message.time}</span>
                             </div>
                         </div>
                     ))}

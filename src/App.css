@@ -111,3 +111,8 @@ body{
   font-weight: bold;
   cursor: pointer;
 }
+
+.date-display{
+  font-size: 8px;
+  color: #2e2e2e;
+}
