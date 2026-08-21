@@ -17,8 +17,8 @@ export default function CopyButton({text}) {
         }
     };
 
-    return (<button onClick={handleCopy}>
-            {isCopied ? "✅ Kopierat!" : "📋 Kopiera svar"}
+    return (<button className="copy-button" onClick={handleCopy}>
+            {isCopied ? "✅ Kopierat!" : "📋 Kopiera"}
         </button>
     );
 }
