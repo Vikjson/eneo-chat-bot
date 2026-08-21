@@ -64,7 +64,7 @@ function App() {
     }
 
 
-    function parseTime(time){
+    function parseTime(time) {
         const hours = time.getHours();
         const minutes = time.getMinutes();
         const day = time.getDate();
@@ -89,11 +89,11 @@ function App() {
                             key={message.id}
                             className={`message ${message.speaker}`}
                         >
-                            <div className="message-content">
-                                <div className="bubble">
-                                    {message.text}
+                            <div className="bubble">
+                                {message.text}
+                                <div className="date-display">
+                                    {message.time}
                                 </div>
-                                <span>{message.time}</span>
                             </div>
                         </div>
                     ))}
