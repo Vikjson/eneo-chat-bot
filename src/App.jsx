@@ -7,7 +7,7 @@ function App() {
         {
             id: crypto.randomUUID(),
             speaker: "ai",
-            text: "Hej. Vad kan jag hjälpa med?",
+            text: "Hej. Vad kan jag hjälpa dig med?",
         },
     ]);
 
