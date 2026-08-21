@@ -19,20 +19,27 @@ html {
     --button-text: #000000;
 }
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg-body: #353535;
-        --bg-chat: #202020;
-        --bg-user-bubble: #454545;
-        --bg-ai-bubble: transparent;
-        --bg-input: #2a2a2a;
-        --text-primary: #ffffff;
-        --text-secondary: #bdbdbd;
-        --border: #454545;
-        --button-bg: #4b463f;
-        --button-text: #ffffff;
-    }
+:root[data-theme="dark"] {
+    --bg-body: #353535;
+    --bg-chat: #202020;
+    --bg-user-bubble: #454545;
+    --bg-ai-bubble: transparent;
+    --bg-input: #2a2a2a;
+    --text-primary: #ffffff;
+    --text-secondary: #bdbdbd;
+    --border: #454545;
+    --button-bg: #4b463f;
+    --button-text: #ffffff;
 }
+
+.dark-mode-button{
+    margin-right: 0;
+    float: right;
+    background-color:rgba(0,0,0,0);
+    border: none;
+    cursor: pointer;
+}
+
 
 
 body,

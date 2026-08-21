@@ -33,7 +33,19 @@ function App() {
     const [input, setInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
+    // Dark mode settings ----------------------------------------------------
 
+    const [darkMode, setDarkMode] = useState(() => {
+        return localStorage.getItem("theme") === "dark";
+    });
+
+    useEffect(() => {
+        const theme = darkMode ? "dark" : "light";
+        document.documentElement.dataset.theme = theme;
+        localStorage.setItem("theme", theme);
+    }, [darkMode]);
+
+    // ------------------------------------------------------------------------------
 
     async function sendMessage() {
         const text = input.trim();
@@ -77,6 +89,9 @@ function App() {
         <main className="app">
             <section className="chat">
                 <header className="chat-header">
+                    <button className="dark-mode-button" onClick={() => setDarkMode(!darkMode)}>
+                        {darkMode ? "🌕" : "🌑"}
+                    </button>
                     <div>
                         <h1>Eneo Chatbot</h1>
                     </div>
