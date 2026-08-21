@@ -64,6 +64,8 @@ body {
 }
 
 .bubble {
+    display: flex;
+    flex-direction: column;
     max-width: 85%;
     padding: 8px 16px;
     border-radius: 20px;
@@ -145,6 +147,7 @@ body {
 }
 
 .date-display {
+    align-self: flex-end;
     font-size: 8px;
     color: #2e2e2e;
 }
