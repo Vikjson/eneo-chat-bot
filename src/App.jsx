@@ -1,15 +1,39 @@
-import {useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import './App.css'
-import {getTestMessage} from './chatbotapi.js'
+import {createMessageObject, fetchSessionHistory, getTestMessage} from './chatbotapi.js'
+import ReactMarkdown from "react-markdown";
 
 function App() {
-    const [messages, setMessages] = useState([
-        createMessageObject("ai", "Hej. Vad kan jag hjälpa dig med?")]
-    );
 
+    const [messages, setMessages] = useState([]);
+
+    useEffect(() => {
+        async function loadHistory() {
+            const response = await fetchSessionHistory();
+            if(response.length > 0){
+                setMessages(response);
+            } else {
+                setMessages([createMessageObject("ai", "Hej! Hur kan jag hjälpa dig?")])
+            }
+        }
+
+        loadHistory();
+    }, []);
+
+    // This section is for automatic scrolling down whenever a new message is created.
+
+    const messagesEndRef = useRef(null);
+
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
+
+    // ------------------------------------------------------------------------------
 
     const [input, setInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+
+
 
     async function sendMessage() {
         const text = input.trim();
@@ -17,7 +41,7 @@ function App() {
             return;
         }
 
-        const userMessage =  createMessageObject("user", text)
+        const userMessage = createMessageObject("user", text)
         setMessages((messages) => [...messages, userMessage]);
         setInput("");
         setIsLoading(true);
@@ -44,23 +68,9 @@ function App() {
         }
     }
 
-    function createMessageObject(speaker, text){
-        return {
-            id: crypto.randomUUID(),
-            speaker: speaker,
-            text: text,
-            time: parseTime(new Date())
-        }
-    }
 
-    function parseTime(time) {
-        const hours = time.getHours();
-        const minutes = time.getMinutes();
-        const day = time.getDate();
-        const month = time.getMonth() + 1;
-        const year = time.getFullYear();
-        return `${hours}:${minutes} | ${day}-${month}-${year}`
-    }
+
+
 
 
     return (
@@ -78,12 +88,15 @@ function App() {
                             key={message.id}
                             className={`message ${message.speaker}`}
                         >
-                            <div className="bubble">
-                                {message.text}
-                                <div className="date-display">
-                                    {message.time}
+                                <div className="bubble">
+                                    <ReactMarkdown>
+                                            {message.text}
+                                    </ReactMarkdown>
+                                    <div className="date-display">
+                                        {message.time}
+                                    </div>
                                 </div>
-                            </div>
+
                         </div>
                     ))}
 
@@ -94,24 +107,26 @@ function App() {
                             </div>
                         </div>
                     )}
+                    <div ref={messagesEndRef} />
                 </div>
 
                 <div className="input-area">
-                    <input
+                    <textarea
                         type="text"
                         value={input}
-                        placeholder="Skriv ett meddelande..."
+                        placeholder="Ställ en fråga..."
                         onChange={(event) => setInput(event.target.value)}
                         onKeyDown={handleKeyDown}
                         disabled={isLoading}
                     />
-
-                    <button
-                        onClick={sendMessage}
-                        disabled={!input.trim() || isLoading}
-                    >
-                        Skicka
-                    </button>
+                    <div className="input-actions">
+                        <button
+                            onClick={sendMessage}
+                            disabled={!input.trim() || isLoading}
+                        >
+                            Skicka
+                        </button>
+                    </div>
                 </div>
             </section>
         </main>
