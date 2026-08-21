@@ -77,6 +77,10 @@ body{
   border-bottom-left-radius: 3px;
 }
 
+.typing{
+  font-style: italic;
+}
+
 .input-area {
   display: flex;
   gap: 10px;
