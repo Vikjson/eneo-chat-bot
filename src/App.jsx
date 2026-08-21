@@ -2,6 +2,7 @@ import {useEffect, useRef, useState} from 'react'
 import './App.css'
 import {createMessageObject, fetchSessionHistory, getTestMessage} from './chatbotapi.js'
 import ReactMarkdown from "react-markdown";
+import CopyButton from "./components/CopyButton.jsx";
 
 function App() {
 
@@ -10,7 +11,7 @@ function App() {
     useEffect(() => {
         async function loadHistory() {
             const response = await fetchSessionHistory();
-            if(response.length > 0){
+            if (response.length > 0) {
                 setMessages(response);
             } else {
                 setMessages([createMessageObject("ai", "Hej! Hur kan jag hjälpa dig?")])
@@ -103,14 +104,19 @@ function App() {
                             key={message.id}
                             className={`message ${message.speaker}`}
                         >
-                                <div className="bubble">
-                                    <ReactMarkdown>
-                                            {message.text}
-                                    </ReactMarkdown>
-                                    <div className="date-display">
-                                        {message.time}
-                                    </div>
+                            <div className="bubble">
+                                <ReactMarkdown>
+                                    {message.text}
+                                </ReactMarkdown>
+
+                                {message.speaker === "ai" && (
+                                    <CopyButton text={message.text}/>
+                                )}
+
+                                <div className="date-display">
+                                    {message.time}
                                 </div>
+                            </div>
 
                         </div>
                     ))}
@@ -122,7 +128,7 @@ function App() {
                             </div>
                         </div>
                     )}
-                    <div ref={messagesEndRef} />
+                    <div ref={messagesEndRef}/>
                 </div>
 
                 <div className="input-area">
