@@ -35,7 +35,73 @@ export async function getTestMessage(input){
     }
 
     return await resp.json();
+}
 
+export async function fetchSessionHistory(){
+    const resp = await fetch(assistantUrl,{
+        method: 'GET',
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            "Accept": "application/json"
+        }
+    })
+
+    if (!resp.ok){
+        throw new Error("AJ");
+    }
+
+    const data = await resp.json();
+
+    const messageHistory = []
+
+    for (let interaction of data.messages){
+        const question = interaction.question;
+        const answer = interaction.answer;
+        const time = new Date(interaction.created_at);
+
+        const userMessage = createTimedMessageObject("user", question, time)
+        const aiMessage = createTimedMessageObject("ai", answer, time)
+
+        messageHistory.push(userMessage)
+        messageHistory.push(aiMessage)
+    }
+
+    return messageHistory;
+
+}
+
+export function createMessageObject(speaker, text) {
+    return {
+        id: crypto.randomUUID(),
+        speaker: speaker,
+        text: text,
+        time: parseTime(new Date())
+    }
+}
+
+function createTimedMessageObject(speaker, text, time) {
+    return {
+        id: crypto.randomUUID(),
+        speaker: speaker,
+        text: text,
+        time: parseTime(time)
+    }
+}
+
+function parseTime(time) {
+    const hours = time.getHours();
+    const minutes = time.getMinutes();
+    const day = time.getDate();
+    const month = time.getMonth() + 1;
+    const year = time.getFullYear();
+    return `${hours}:${minutes} | ${day}-${month}-${year}`
+}
+
+
+/**
+ *
+ */
+function formatText(text){
 
 
 }
