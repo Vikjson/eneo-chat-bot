@@ -96,3 +96,12 @@ function parseTime(time) {
     const year = time.getFullYear();
     return `${hours}:${minutes} | ${day}-${month}-${year}`
 }
+
+
+/**
+ *
+ */
+function formatText(text){
+
+
+}

@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState} from 'react'
 import './App.css'
 import {createMessageObject, fetchSessionHistory, getTestMessage} from './chatbotapi.js'
+import ReactMarkdown from "react-markdown";
 
 function App() {
 
@@ -87,12 +88,15 @@ function App() {
                             key={message.id}
                             className={`message ${message.speaker}`}
                         >
-                            <div className="bubble">
-                                {message.text}
-                                <div className="date-display">
-                                    {message.time}
+                                <div className="bubble">
+                                    <ReactMarkdown>
+                                            {message.text}
+                                    </ReactMarkdown>
+                                    <div className="date-display">
+                                        {message.time}
+                                    </div>
                                 </div>
-                            </div>
+
                         </div>
                     ))}
 

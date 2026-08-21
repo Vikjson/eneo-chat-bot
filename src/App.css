@@ -55,6 +55,11 @@ body {
     display: flex;
 }
 
+.message p{
+    margin: 0;
+    padding: 0;
+}
+
 .message.user {
     justify-content: flex-end;
 }
@@ -155,3 +160,4 @@ body {
     font-size: 8px;
     color: #2e2e2e;
 }
+
