@@ -8,6 +8,7 @@ function App() {
             id: crypto.randomUUID(),
             speaker: "ai",
             text: "Hej. Vad kan jag hjälpa dig med?",
+            time: parseTime(new Date())
         },
     ]);
 
@@ -22,7 +23,8 @@ function App() {
         const userMessage = {
             id: crypto.randomUUID(),
             speaker: "user",
-            text,
+            text: text,
+            time: parseTime(new Date())
         };
 
         setMessages((messages) => [...messages, userMessage]);
@@ -36,6 +38,7 @@ function App() {
                 id: crypto.randomUUID(),
                 speaker: "ai",
                 text: resp.answer,
+                time: parseTime(new Date())
             };
 
             setMessages((messages) => [...messages, aiMessage]);
@@ -46,6 +49,7 @@ function App() {
                     id: crypto.randomUUID(),
                     speaker: "ai",
                     text: "Svar kunde ej hämtas.",
+                    time: parseTime(new Date())
                 },
             ]);
         } finally {
@@ -60,12 +64,13 @@ function App() {
     }
 
 
-    function handleInputChange(event) {
-        const newInput = event.target.value;
-
-        setInput(newInput)
-
-
+    function parseTime(time){
+        const hours = time.getHours();
+        const minutes = time.getMinutes();
+        const day = time.getDate();
+        const month = time.getMonth() + 1;
+        const year = time.getFullYear();
+        return `${hours}:${minutes} | ${day}-${month}-${year}`
     }
 
 
@@ -84,8 +89,11 @@ function App() {
                             key={message.id}
                             className={`message ${message.speaker}`}
                         >
-                            <div className="bubble">
-                                {message.text}
+                            <div className="message-content">
+                                <div className="bubble">
+                                    {message.text}
+                                </div>
+                                <span>{message.time}</span>
                             </div>
                         </div>
                     ))}
@@ -113,7 +121,7 @@ function App() {
                         onClick={sendMessage}
                         disabled={!input.trim() || isLoading}
                     >
-                        Send
+                        Skicka
                     </button>
                 </div>
             </section>
