@@ -88,13 +88,14 @@ function App() {
                                 <ReactMarkdown>
                                     {message.text}
                                 </ReactMarkdown>
+                                <div className="message-footer-container">
+                                    {message.speaker === "ai" && (
+                                        <CopyButton text={message.text}/>
+                                    )}
 
-                                {message.speaker === "ai" && (
-                                    <CopyButton text={message.text}/>
-                                )}
-
-                                <div className="date-display">
-                                    {message.time}
+                                    <div className="date-display">
+                                        {message.time}
+                                    </div>
                                 </div>
                             </div>
 
@@ -113,7 +114,6 @@ function App() {
 
                 <div className="input-area">
                     <textarea
-                        type="text"
                         value={input}
                         placeholder="Ställ en fråga..."
                         onChange={(event) => setInput(event.target.value)}

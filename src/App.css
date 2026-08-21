@@ -139,7 +139,7 @@ body {
     display: flex;
 }
 
-.message p{
+.message p {
     margin: 0;
     padding: 0;
 }
@@ -174,8 +174,8 @@ body {
     border-bottom-left-radius: 3px;
 }
 
-.typing{
-  font-style: italic;
+.typing {
+    font-style: italic;
 }
 
 .input-area {
@@ -232,6 +232,23 @@ textarea::placeholder {
     font-size: 12px;
     font-weight: bold;
     cursor: pointer;
+}
+.message-footer-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.copy-button {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 10px;
+    cursor: pointer;
+    padding: 4px 0;
+    margin-top: 6px;
+    align-self: flex-start;
+    transition: color 0.2s ease;
 }
 
 .date-display {
