@@ -80,7 +80,7 @@ h1 {
 }
 
 @media (min-width: 1200px) {
-    . chat {
+    .chat {
         max-width: 800px;
     }
 
@@ -213,7 +213,6 @@ textarea::placeholder {
 
 .input-actions {
     display: flex;
-    justify-content: space-between;
     justify-content: flex-end;
 }
 
