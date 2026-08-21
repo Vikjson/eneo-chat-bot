@@ -1,11 +1,18 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import './App.css'
-import {getTestMessage} from './chatbotapi.js'
+import {createMessageObject, fetchSessionHistory, getTestMessage} from './chatbotapi.js'
 
 function App() {
-    const [messages, setMessages] = useState([
-        createMessageObject("ai", "Hej. Vad kan jag hjälpa dig med?")]
-    );
+    const [messages, setMessages] = useState([]);
+
+    useEffect(() => {
+        async function loadHistory() {
+            const response = await fetchSessionHistory();
+            setMessages(response);
+        }
+
+        loadHistory();
+    }, []);
 
 
     const [input, setInput] = useState("");
@@ -44,23 +51,9 @@ function App() {
         }
     }
 
-    function createMessageObject(speaker, text) {
-        return {
-            id: crypto.randomUUID(),
-            speaker: speaker,
-            text: text,
-            time: parseTime(new Date())
-        }
-    }
 
-    function parseTime(time) {
-        const hours = time.getHours();
-        const minutes = time.getMinutes();
-        const day = time.getDate();
-        const month = time.getMonth() + 1;
-        const year = time.getFullYear();
-        return `${hours}:${minutes} | ${day}-${month}-${year}`
-    }
+
+
 
 
     return (
