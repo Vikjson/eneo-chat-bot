@@ -1,22 +1,38 @@
-import {useEffect, useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import './App.css'
 import {createMessageObject, fetchSessionHistory, getTestMessage} from './chatbotapi.js'
 
 function App() {
+
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
         async function loadHistory() {
             const response = await fetchSessionHistory();
-            setMessages(response);
+            if(response.length > 0){
+                setMessages(response);
+            } else {
+                setMessages([createMessageObject("ai", "Hej! Hur kan jag hjälpa dig?")])
+            }
         }
 
         loadHistory();
     }, []);
 
+    // This section is for automatic scrolling down whenever a new message is created.
+
+    const messagesEndRef = useRef(null);
+
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
+
+    // ------------------------------------------------------------------------------
 
     const [input, setInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+
+
 
     async function sendMessage() {
         const text = input.trim();
@@ -87,6 +103,7 @@ function App() {
                             </div>
                         </div>
                     )}
+                    <div ref={messagesEndRef} />
                 </div>
 
                 <div className="input-area">
