@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState} from 'react'
 import './App.css'
-import {createMessageObject, fetchSessionHistory, getTestMessage} from './chatbotapi.js'
+import {createMessageObject, getMessageFromAi} from './chatbotapi.js'
 import ReactMarkdown from "react-markdown";
 import CopyButton from "./components/CopyButton.jsx";
 
@@ -8,18 +8,6 @@ function App() {
 
     const [messages, setMessages] = useState([]);
 
-    useEffect(() => {
-        async function loadHistory() {
-            const response = await fetchSessionHistory();
-            if (response.length > 0) {
-                setMessages(response);
-            } else {
-                setMessages([createMessageObject("ai", "Hej! Hur kan jag hjälpa dig?")])
-            }
-        }
-
-        loadHistory();
-    }, []);
 
     // This section is for automatic scrolling down whenever a new message is created.
 
@@ -54,16 +42,14 @@ function App() {
             return;
         }
 
+
         const userMessage = createMessageObject("user", text)
         setMessages((messages) => [...messages, userMessage]);
         setInput("");
         setIsLoading(true);
 
         try {
-            const resp = await getTestMessage(text);
-
-            const aiMessage = createMessageObject("ai", resp.answer)
-
+            const aiMessage = createMessageObject("ai", await getMessageFromAi(text));
             setMessages((messages) => [...messages, aiMessage]);
         } catch (error) {
             setMessages((messages) => [
@@ -73,6 +59,7 @@ function App() {
         } finally {
             setIsLoading(false);
         }
+
     }
 
     function handleKeyDown(event) {
