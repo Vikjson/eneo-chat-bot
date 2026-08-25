@@ -188,7 +188,7 @@ async function createNewSession(input) {
 
 export function createMessageObject(speaker, text) {
     const message = {
-        id: crypto.randomUUID(),
+        id: generateRandomUUID(),
         speaker: speaker,
         text: text,
         time: parseTime(new Date())
@@ -204,7 +204,19 @@ export function createMessageObject(speaker, text) {
     return message;
 }
 
-
+function generateRandomUUID(){
+    if (crypto.randomUUID){
+        console.log("[Generating random UUID]");
+        return crypto.randomUUID()
+    } else {
+        console.log("crypto.randomUUID not available. Using fallback");
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+            const r = Math.random() * 16 | 0;
+            const v = c === 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+}
 // function createTimedMessageObject(speaker, text, time) {
 //     return {
 //         id: crypto.randomUUID(),
