@@ -3,7 +3,8 @@ import userInfo from "./assets/user-info.json";
 const assistantId = userInfo.assistant;
 const baseUrl = userInfo.api_base_url;
 const token = userInfo.token;
-let sessionId = null;
+const apiKey =userInfo.api_key;
+    let sessionId = null;
 
 console.log("[API] Initialized", {
     assistantId,
@@ -48,7 +49,7 @@ async function getMessage(input) {
     const resp = await fetch(url, {
         method: 'POST',
         headers: {
-            "Authorization": `Bearer ${token}`,
+            "X-Api-Key": apiKey,
             "Accept": "application/json",
             'Content-Type': 'application/json'
         },
@@ -139,7 +140,7 @@ async function createNewSession(input) {
     const resp = await fetch(url, {
         method: "POST",
         headers: {
-            "Authorization": `Bearer ${token}`,
+            "X-Api-Key": apiKey,
             "Accept": "application/json",
             'Content-Type': 'application/json'
         },
