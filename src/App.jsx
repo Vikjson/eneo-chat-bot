@@ -4,6 +4,7 @@ import {createMessageObject, getMessageFromAi} from './chatbotapi.js'
 import ReactMarkdown from "react-markdown";
 import CopyButton from "./components/CopyButton.jsx";
 
+
 function App() {
 
     const [messages, setMessages] = useState([]);
@@ -106,7 +107,7 @@ function App() {
                             setDarkMode(!darkMode);
                         }}
                     >
-                        {darkMode ? "🌕" : "🌑"}
+                        {darkMode ? "🌕 Light Mode" : "🌑 Dark Mode"}
                     </button>
 
                     <div>
@@ -127,7 +128,7 @@ function App() {
 
                                 <div className="message-footer-container">
                                     {message.speaker === "ai" && (
-                                        <CopyButton text={message.text}/>
+                                        <CopyButton text={message.text} isDarkMode={darkMode} />
                                     )}
 
                                     <div className="date-display">
