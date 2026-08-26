@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState} from 'react'
 import './App.css'
-import {createMessageObject, getMessageFromAi} from './chatbotapi.js'
+import {createMessageObject, getAssistantGreeting, getMessageFromAi} from './chatbotapi.js'
 import ReactMarkdown from "react-markdown";
 import CopyButton from "./components/CopyButton.jsx";
 
@@ -8,6 +8,13 @@ import CopyButton from "./components/CopyButton.jsx";
 function App() {
 
     const [messages, setMessages] = useState([]);
+
+    useEffect(() => {
+        getAssistantGreeting().then(greeting => {
+            setMessages((messages) => [...messages, createMessageObject("ai",greeting)]);
+        })
+    }, [])
+
 
     // This section is for automatic scrolling down whenever a new message is created.
 

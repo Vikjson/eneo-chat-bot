@@ -179,7 +179,7 @@ h1 {
 .date-display {
     align-self: flex-end;
 
-    font-size: 8px;
+    font-size: 10px;
     color: var(--text-secondary);
 }
 

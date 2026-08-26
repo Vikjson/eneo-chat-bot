@@ -6,11 +6,16 @@ const token = userInfo.token;
 const apiKey =userInfo.api_key;
     let sessionId = null;
 
-console.log("[API] Initialized", {
-    assistantId,
-    baseUrl,
-    hasToken: Boolean(token),
-});
+export async function getAssistantGreeting(){
+    const resp = await fetch(baseUrl + "/assistants/" + assistantId, {
+        headers: {
+            "X-Api-Key": apiKey,
+            "Accept": "application/json"
+        }
+    })
+    const data = await resp.json();
+    return data?.description ?? "Hej! Vad kan jag hjälpa dig med idag?";
+}
 
 export async function getMessageFromAi(input) {
     console.log("[API] getMessageFromAi called", {
