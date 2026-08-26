@@ -7,7 +7,7 @@ const apiKey =userInfo.api_key;
     let sessionId = null;
 
 export async function getAssistantGreeting(){
-    const resp = await fetch(baseUrl + "/assistants/" + assistantId, {
+    const resp = await fetch(baseUrl + "/assistants/" + assistantId + "/", {
         headers: {
             "X-Api-Key": apiKey,
             "Accept": "application/json"

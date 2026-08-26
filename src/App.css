@@ -288,27 +288,27 @@ textarea::placeholder {
 
     .messages {
         padding: 16px;
-        font-size: 20px;
+        font-size: 18px;
     }
 
     .bubble {
         max-width: 95%;
-        font-size: 20px;
+        font-size: 18px;
     }
 
     .input-area textarea {
-        font-size: 20px;
+        font-size: 18px;
     }
 
     .input-area button {
         min-height: 36px;
         padding: 8px;
 
-        font-size: 20px;
+        font-size: 18px;
     }
 
     .dark-mode-button {
-        font-size: 20px;
+        font-size: 16px;
     }
 }
 
