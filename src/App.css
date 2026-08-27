@@ -15,7 +15,8 @@ html {
     --text-primary: #000000;
     --text-secondary: #2e2e2e;
     --border: #d9d9d9;
-    --button-bg: #e1ddd7;
+    --button-bg: #cdcac5;
+    --button-hover-bg: #aaa7a1;
     --button-text: #000000;
 }
 
@@ -28,7 +29,8 @@ html {
     --text-primary: #ffffff;
     --text-secondary: #bdbdbd;
     --border: #454545;
-    --button-bg: #4b463f;
+    --button-bg: #595959;
+    --button-hover-bg: #676767;
     --button-text: #ffffff;
 }
 
@@ -251,14 +253,18 @@ textarea::placeholder {
     background-color: var(--button-bg);
     border-radius: 5px;
     float: right;
-    font-size: 16px;
+    font-size: 14px;
     margin-right: 0;
-    padding: 5px;
+    padding: 8px;
     margin-top: 10px;
 
     border: none;
     color: var(--text-primary);
     cursor: pointer;
+}
+
+.dark-mode-button:hover {
+    background-color: var(--button-hover-bg);
 }
 
 
@@ -329,4 +335,15 @@ textarea::placeholder {
     .bubble {
         font-size: 15px;
     }
+}
+
+.ai-icon{
+    height: 30px;
+    width: 30px;
+    margin-top: 5px;
+
+}
+
+.input-area button:hover {
+    background: var(--button-hover-bg);
 }
