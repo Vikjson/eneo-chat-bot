@@ -1,9 +1,10 @@
 import {useEffect, useRef, useState} from 'react'
 import './App.css'
 import {createMessageObject, getAssistantGreeting, getMessageFromAi} from './chatbotapi.js'
-import ReactMarkdown from "react-markdown";
-import CopyButton from "./components/CopyButton.jsx";
-import aiIcon from "./assets/ai_icon.png"
+import Message from "./components/Message.jsx";
+
+
+
 
 function App() {
 
@@ -124,31 +125,10 @@ function App() {
 
                 <div className="messages">
                     {messages.map((message) => (
-
-                        <div
-                            key={message.id}
-                            className={`message ${message.speaker}`}
-                        >
-                            {message.speaker === "ai" && (
-                                <img className="ai-icon" src={aiIcon} alt="Ai icon"/>
-                            )}
-
-                            <div className="bubble">
-                                <ReactMarkdown>
-                                    {message.text}
-                                </ReactMarkdown>
-
-                                <div className="message-footer-container">
-                                    {message.speaker === "ai" && (
-                                        <CopyButton text={message.text} isDarkMode={darkMode} />
-                                    )}
-
-                                    <div className="date-display">
-                                        {message.time}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <Message
+                            message={message}
+                            darkMode={darkMode}>
+                        </Message>
                     ))}
 
                     {isLoading && (

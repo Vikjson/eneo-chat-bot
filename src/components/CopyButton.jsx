@@ -1,5 +1,5 @@
 export default function CopyButton(props) {
-    const isDarkMode = props.isDarkMode;
+    const darkMode = props.darkMode;
     const text = props.text;
 
     const [isCopied, setCopied] = useState(false);
@@ -32,9 +32,9 @@ export default function CopyButton(props) {
 
     function resolveCopyIcon(){
         if (isCopied) {
-            return isDarkMode ? copyOkDark : copyOk;
+            return darkMode ? copyOkDark : copyOk;
         } else {
-            return isDarkMode ? copyIconDark : copyIcon;
+            return darkMode ? copyIconDark : copyIcon;
         }
     }
 
