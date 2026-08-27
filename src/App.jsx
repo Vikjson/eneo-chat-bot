@@ -112,6 +112,16 @@ function App() {
         <main className="app">
             <section className="chat">
                 <header className="chat-header">
+
+                    <button className="button"
+                        onClick={() => {
+                            setMessages([])
+                            removeSession();
+                            createNewSessionAndAddGreeting()
+                        }}>
+                        Ny chatt
+                    </button>
+
                     <button
                         className="button"
                         onClick={() => {
@@ -120,14 +130,6 @@ function App() {
                         }}
                     >
                         {darkMode ? "Ljust läge" : "Mörkt läge"}
-                    </button>
-                    <button className="button"
-                        onClick={() => {
-                            setMessages([])
-                            removeSession();
-                            createNewSessionAndAddGreeting()
-                        }}>
-                        Ny chatt
                     </button>
 
 

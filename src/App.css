@@ -257,6 +257,7 @@ textarea::placeholder {
     margin-right: 0;
     padding: 8px;
     margin-top: 10px;
+    margin-left: 15px;
 
     border: none;
     color: var(--text-primary);
