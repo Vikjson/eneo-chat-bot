@@ -4,7 +4,7 @@ const assistantId = userInfo.assistant;
 const baseUrl = userInfo.api_base_url;
 const token = userInfo.token;
 const apiKey =userInfo.api_key;
-    let sessionId = null;
+let sessionId = null;
 
 export async function getAssistantGreeting(){
     const resp = await fetch(baseUrl + "/assistants/" + assistantId + "/", {
@@ -26,6 +26,10 @@ export async function getMessageFromAi(input) {
     return sessionId
         ? await getMessage(input)
         : await createNewSession(input);
+}
+
+export function removeSession(){
+    sessionId = null;
 }
 
 async function getMessage(input) {

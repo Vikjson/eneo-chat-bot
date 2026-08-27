@@ -249,7 +249,7 @@ textarea::placeholder {
 
 /* ---------- Theme button ---------- */
 
-.dark-mode-button {
+.button {
     background-color: var(--button-bg);
     border-radius: 5px;
     float: right;
@@ -263,7 +263,7 @@ textarea::placeholder {
     cursor: pointer;
 }
 
-.dark-mode-button:hover {
+.button:hover {
     background-color: var(--button-hover-bg);
 }
 
@@ -313,7 +313,7 @@ textarea::placeholder {
         font-size: 18px;
     }
 
-    .dark-mode-button {
+    .button {
         font-size: 16px;
     }
 }
