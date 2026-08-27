@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState} from 'react'
 import './App.css'
-import {createMessageObject, getAssistantGreeting, getMessageFromAi} from './chatbotapi.js'
+import {createMessageObject, getAssistantGreeting, getMessageFromAi, removeSession} from './chatbotapi.js'
 import Message from "./components/Message.jsx";
 
 
@@ -11,10 +11,14 @@ function App() {
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
+        createNewSessionAndAddGreeting();
+    }, [])
+
+    function createNewSessionAndAddGreeting(){
         getAssistantGreeting().then(greeting => {
             setMessages((messages) => [...messages, createMessageObject("ai",greeting)]);
         })
-    }, [])
+    }
 
 
     // This section is for automatic scrolling down whenever a new message is created.
@@ -108,8 +112,18 @@ function App() {
         <main className="app">
             <section className="chat">
                 <header className="chat-header">
+
+                    <button className="button"
+                        onClick={() => {
+                            setMessages([])
+                            removeSession();
+                            createNewSessionAndAddGreeting()
+                        }}>
+                        Ny chatt
+                    </button>
+
                     <button
-                        className="dark-mode-button"
+                        className="button"
                         onClick={() => {
                             console.log("[Theme] Toggle clicked. New value:", !darkMode);
                             setDarkMode(!darkMode);
@@ -117,6 +131,7 @@ function App() {
                     >
                         {darkMode ? "Ljust läge" : "Mörkt läge"}
                     </button>
+
 
                     <div>
                         <h1>Eneo Chatbot</h1>
