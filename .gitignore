@@ -24,4 +24,3 @@ dist-ssr
 *.sw?
 
 #Token
-src/assets/user-info.json
