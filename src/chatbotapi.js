@@ -92,41 +92,6 @@ console.log("[API] AI response received", {
 return data.response;
 }
 
-
-// export async function fetchSessionHistory() {
-//     const resp = await fetch(`${baseUrl}/assistants/${assistantId}/sessions/${sessionId}`, {
-//         method: 'GET',
-//         headers: {
-//             "Authorization": `Bearer ${token}`,
-//             "Accept": "application/json"
-//         }
-//     })
-//
-//     if (!resp.ok) {
-//         alert("Kunde inte hämta chatthistorik");
-//         throw new Error("Couldn't fetch chat history.");
-//     }
-//
-//     const data = await resp.json();
-//
-//     const messageHistory = []
-//
-//     for (let interaction of data.messages) {
-//         const question = interaction.question;
-//         const answer = interaction.answer;
-//         const time = new Date(interaction.created_at);
-//
-//         const userMessage = createTimedMessageObject("user", question, time)
-//         const aiMessage = createTimedMessageObject("ai", answer, time)
-//
-//         messageHistory.push(userMessage)
-//         messageHistory.push(aiMessage)
-//     }
-//
-//     return messageHistory;
-// }
-
-
 async function createNewSession(input) {
     console.log("[API] No session exists. Creating new session.");
 
@@ -213,16 +178,6 @@ function generateRandomUUID() {
         });
     }
 }
-
-// function createTimedMessageObject(speaker, text, time) {
-//     return {
-//         id: crypto.randomUUID(),
-//         speaker: speaker,
-//         text: text,
-//         time: parseTime(time)
-//     }
-// }
-
 
 function parseTime(time) {
     const hours = formatTime(time.getHours());
