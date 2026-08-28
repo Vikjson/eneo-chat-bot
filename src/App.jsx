@@ -3,9 +3,6 @@ import './App.css'
 import {createMessageObject, getAssistantGreeting, getMessageFromAi, removeSession} from './chatbotapi.js'
 import Message from "./components/Message.jsx";
 
-
-
-
 function App() {
 
     const [messages, setMessages] = useState([]);
@@ -121,6 +118,7 @@ function App() {
                         onClick={() => {
                             setMessages([])
                             removeSession();
+                            greetingLoaded.current = false;
                             createNewSessionAndAddGreeting()
                         }}>
                         Ny chatt
