@@ -9,10 +9,14 @@ import Message from "./components/Message.jsx";
 function App() {
 
     const [messages, setMessages] = useState([]);
+    const greetingLoaded = useRef(false);
 
     useEffect(() => {
+        if (greetingLoaded.current) return;
+
+        greetingLoaded.current = true;
         createNewSessionAndAddGreeting();
-    }, [])
+    }, []);
 
     function createNewSessionAndAddGreeting(){
         getAssistantGreeting().then(greeting => {
@@ -139,8 +143,12 @@ function App() {
                 </header>
 
                 <div className="messages">
+                    {messages.length === 0 && (
+                        <p><i>Laddar...</i></p>
+                    )}
                     {messages.map((message) => (
                         <Message
+                            key={message.id}
                             message={message}
                             darkMode={darkMode}>
                         </Message>

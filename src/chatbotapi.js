@@ -1,20 +1,16 @@
 import userInfo from "./assets/user-info.json";
-
-const assistantId = userInfo.assistant;
 const baseUrl = userInfo.api_base_url;
-const token = userInfo.token;
-const apiKey =userInfo.api_key;
+
 let sessionId = null;
 
 export async function getAssistantGreeting(){
-    const resp = await fetch(baseUrl + "/assistants/" + assistantId + "/", {
+    const resp = await fetch(baseUrl + "/greeting/", {
         headers: {
-            "X-Api-Key": apiKey,
             "Accept": "application/json"
         }
     })
     const data = await resp.json();
-    return data?.description ?? "Hej! Vad kan jag hjälpa dig med idag?";
+    return data?.greeting;
 }
 
 export async function getMessageFromAi(input) {
@@ -37,40 +33,27 @@ async function getMessage(input) {
         sessionId,
     });
 
-    if (token.length === 0) {
-        console.error("[API] Token is missing!");
-        throw new Error("Could not find token!");
-    }
-
     if (!sessionId) {
         console.error("[API] Session ID is missing!");
         throw new Error("Could not find session!");
     }
 
-    const url = `${baseUrl}/assistants/${assistantId}/sessions/${sessionId}/`;
+    const url = `${baseUrl}/${sessionId}/message/`;
 
     console.log("[API] POST existing session", {
         url,
         sessionId,
-        assistantId,
     });
 
     const resp = await fetch(url, {
         method: 'POST',
         headers: {
-            "X-Api-Key": apiKey,
             "Accept": "application/json",
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(
             {
-                "question": input,
-                "session_id": "eda38c56-94c7-44e2-84eb-bd0d2ea0ba13",
-                "files": [],
-                "stream": false,
-                "tools": {
-                    "assistants": []
-                }
+                "message": input,
             }
         )
     });
@@ -97,7 +80,7 @@ async function getMessage(input) {
         answerLength: data.answer?.length,
     });
 
-    return data.answer;
+    return data.response;
 }
 
 
@@ -138,29 +121,22 @@ async function getMessage(input) {
 async function createNewSession(input) {
     console.log("[API] No session exists. Creating new session.");
 
-    const url = `${baseUrl}/conversations/`;
+    const url = `${baseUrl}/session/`;
 
     console.log("[API] POST create session", {
         url,
-        assistantId,
         inputLength: input?.length,
     });
 
     const resp = await fetch(url, {
         method: "POST",
         headers: {
-            "X-Api-Key": apiKey,
             "Accept": "application/json",
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(
             {
-                "question": input,
-                "assistant_id": assistantId,
-                "files": [],
-                "stream": false,
-                "use_web_search": false,
-                "require_tool_approval": false
+                "message": input,
             }
         )
     });
@@ -183,16 +159,16 @@ async function createNewSession(input) {
     const data = await resp.json();
 
     console.log("[API] New session created", {
-        sessionId: data.session_id,
+        sessionId: data.sessionId,
         hasAnswer: Boolean(data.answer),
         answerLength: data.answer?.length,
     });
 
-    sessionId = data.session_id;
+    sessionId = data.sessionId;
 
     console.log("[API] sessionId stored:", sessionId);
 
-    return data.answer;
+    return data.response;
 }
 
 

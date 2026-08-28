@@ -9,7 +9,6 @@ function Message(props) {
 
     return (
         <div
-            key={message.id}
             className={`message ${message.speaker}`}
         >
             {message.speaker === "ai" && (
